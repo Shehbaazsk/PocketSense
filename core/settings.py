@@ -53,7 +53,8 @@ THIRDPARTY_APPS = [
 ]
 
 PROJECTS_APPS = [
-    "apps.accounts.users"
+    "apps.accounts.users",
+    "apps.accounts.students",
 ]
 
 

@@ -24,9 +24,9 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Library Management API",
+        title="Pocket Sense API",
         default_version='v1',
-        description="API documentation for the Library Management System",
+        description="API documentation for the Pocket Sense Api",
         terms_of_service="https://www.google.com/policies/terms/",
         contact=openapi.Contact(email="shehbaazwebdev@gmail.com"),
         license=openapi.License(name="BSD License"),
