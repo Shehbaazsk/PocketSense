@@ -53,7 +53,7 @@ THIRDPARTY_APPS = [
 ]
 
 PROJECTS_APPS = [
-    "apps.users"
+    "apps.accounts.users"
 ]
 
 
