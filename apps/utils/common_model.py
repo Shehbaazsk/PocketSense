@@ -21,6 +21,18 @@ class CommonModel(models.Model):
     class Meta:
         abstract = True
 
+    def delete(self, *args, **kwargs):
+        self.is_delete = True
+        self.save()
+    
+    def restore(self, *args, **kwargs):
+        self.is_delete = False
+        self.save()
+
+    def activate_or_deactivate(self, *args, **kwargs):
+        self.is_active = not self.is_active
+        self.save()
+
 
 class CommonModelSerializer(serializers.ModelSerializer):
     """Serializer for the CommonModel fields"""
