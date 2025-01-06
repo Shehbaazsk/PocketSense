@@ -5,12 +5,10 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 class Student(models.Model):
-    PAYMENT_METHOD_CHOICES = [
-        ('upi', 'UPI'),
-        ('cash', 'Cash'),
-        ('card', 'Credit/Debit Card'),
-    ]
-
+    class PaymentMethod(models.TextChoices):
+        UPI = 'upi', 'UPI'
+        CASH = 'cash', 'Cash'
+        CARD = 'card', 'Credit/Debit Card'
     # One-to-one relationship with the User model
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')
 
@@ -18,8 +16,8 @@ class Student(models.Model):
     semester = models.SmallIntegerField()
     default_payment_method = models.CharField(
         max_length=30,
-        choices=PAYMENT_METHOD_CHOICES,
-        default='cash',
+        choices=PaymentMethod.choices,
+        default=PaymentMethod.CASH,
     )
 
     def __str__(self):
