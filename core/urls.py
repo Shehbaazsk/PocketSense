@@ -20,7 +20,7 @@ from django.urls import path,include
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny
 
 schema_view = get_schema_view(
     openapi.Info(

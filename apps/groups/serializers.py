@@ -18,3 +18,10 @@ class CreateUpdateGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
         exclude = ["is_delete"]
+
+class RemoveMemberSerializer(serializers.Serializer):
+    member_id = serializers.ListField(
+        child= serializers.IntegerField(),
+        allow_empty=False,
+        help_text="A list of member IDs to be removed from the group."
+        )
