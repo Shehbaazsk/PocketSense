@@ -38,7 +38,7 @@ class GroupViewSet(viewsets.ModelViewSet):
         group.soft_delete()
         return Response({"detail": "Group has been soft deleted."}, status=status.HTTP_204_NO_CONTENT)
     
-    @action(detail=True, methods=['get'], permission_classes=[IsAuthenticated])
+    @action(detail=True, url_path="leave-group",methods=['get'], permission_classes=[IsAuthenticated])
     def leave_group(self, request, pk=None):
         """
         Allow the authenticated user to leave the group.
@@ -49,7 +49,7 @@ class GroupViewSet(viewsets.ModelViewSet):
             return Response({"detail": "You have left the group."}, status=status.HTTP_200_OK)
         return Response({"detail": "You are not a member of this group."}, status=status.HTTP_400_BAD_REQUEST)
     
-    @action(detail=True, methods=['post'], permission_classes=[IsAdminUser],serializer_class=RemoveMemberSerializer)
+    @action(detail=True, url_path='remove-members',methods=['post'], permission_classes=[IsAdminUser],serializer_class=RemoveMemberSerializer)
     def remove_members(self, request, pk=None):
         """
         Remove a specific member from the group.
@@ -72,7 +72,7 @@ class GroupViewSet(viewsets.ModelViewSet):
             "detail": "Members removed successfully."
         },status=status.HTTP_200_OK)
     
-    @action(detail=True, methods=['get'])
+    @action(detail=True, methods=['get'],url_path='activate-or-deactivate')
     def active_or_deactivate(self, request, pk=None):
         """
         Activate or deactivate a group 
