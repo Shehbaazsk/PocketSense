@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
 from datetime import timedelta
 from pathlib import Path
 
@@ -55,7 +56,8 @@ THIRDPARTY_APPS = [
 PROJECTS_APPS = [
     "apps.accounts.users",
     "apps.accounts.students",
-    "apps.groups"
+    "apps.groups",
+    "apps.expenses"
 ]
 
 
@@ -69,6 +71,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # custom middlewares
+    'apps.utils.middlewares.CurrentUserMiddleware'
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -143,6 +148,10 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
@@ -190,7 +199,6 @@ LOGGING = {
 }
 
 
-
 REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": [
         "rest_framework.renderers.JSONRenderer",
@@ -211,7 +219,7 @@ SWAGGER_SETTINGS = {
         'Bearer': {
             'type': 'apiKey',
             'name': 'Authorization',
-            'in': 'header', 
+            'in': 'header',
         }
     },
     'USE_SESSION_AUTH': False,
