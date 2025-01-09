@@ -1,4 +1,5 @@
-from rest_framework.permissions import BasePermission, SAFE_METHODS
+from rest_framework.permissions import SAFE_METHODS, BasePermission
+
 
 class IsAdminOrOwner(BasePermission):
     """
@@ -9,8 +10,11 @@ class IsAdminOrOwner(BasePermission):
         if not request.user or not request.user.is_authenticated:
             return False
         return True
+
     def has_object_permission(self, request, view, obj):
-        
+
         if request.method in SAFE_METHODS:
             return True
-        return request.user.is_superuser or obj.user == request.user
+        if request.user.is_superuser or obj.created_by == request.user:
+            return True
+        return False
