@@ -32,3 +32,6 @@ class Settlement(CommonModel, models.Model):
     settlement_method = models.CharField(
         max_length=20, choices=SettlementMethod.choices, default=SettlementMethod.CASH)
     due_date = models.DateField()
+
+    def __str__(self):
+        return f"Settlement from {self.payer.first_name} to {self.payee.first_name} for ${self.amount}"

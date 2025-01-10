@@ -14,6 +14,8 @@ class SettlementSerializer(serializers.ModelSerializer):
         fields = ['id', 'expense_split', 'payer', 'payee', 'amount',
                   'payment_status', 'settlement_method', 'due_date']
 
+        read_only_fields = ['id']
+
     def validate_amount(self, value):
         """Ensure the settlement amount is valid."""
         if value <= 0:
@@ -22,13 +24,10 @@ class SettlementSerializer(serializers.ModelSerializer):
         return value
 
     def validate(self, data):
-        payer = data['payer']
-        payee = data['payee']
-
-        if payer == payee:
+        if data['payer'] == data['payee']:
             raise serializers.ValidationError(
                 "Payer and payee cannot be the same user.")
-        return super().validate(data)
+        return data
 
     def create(self, validated_data):
         with transaction.atomic():

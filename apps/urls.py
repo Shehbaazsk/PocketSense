@@ -1,8 +1,8 @@
 from django.urls import include, path
 
 urlpatterns = [
-    path("users/", include("apps.accounts.urls")),
-    path("groups/", include("apps.groups.urls")),
-    path("expenses/", include("apps.expenses.urls")),
-    path("settlements/", include("apps.settlements.urls")),
+    path(r"users/", include("apps.accounts.urls")),
+    path(r"groups/", include("apps.groups.urls")),
+    path(r"expenses/", include("apps.expenses.urls")),
+    path(r"settlements/", include("apps.settlements.urls")),
 ]
