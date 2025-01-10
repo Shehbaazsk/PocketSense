@@ -40,3 +40,14 @@ class Expense(CommonModel, models.Model):
 
     def __str__(self):
         return f"{self.category} - {self.amount}"
+
+
+class ExpenseSplit(models.Model):
+    expense = models.ForeignKey(
+        Expense, on_delete=models.CASCADE, related_name='splits')
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    is_paid = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Split for {self.expense.id} by {self.user.username}"

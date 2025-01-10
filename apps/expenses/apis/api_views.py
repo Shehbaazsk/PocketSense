@@ -16,20 +16,17 @@ class ExpenseViewSet(viewsets.ModelViewSet):
     parser_classes = (MultiPartParser, FormParser)
 
     def get_serializer_class(self):
-        if self.action in ['retrieve', 'split_details']:
+        if self.action in ['list', 'retrieve']:
             return ExpenseDetailSerializer
         return ExpenseSerializer
 
-    @swagger_auto_schema(
-        request_body=ExpenseSerializer
-    )
     def create(self, request, *args, **kwargs):
-        return super().create(request, *args, **kwargs)
-
-    def perform_create(self, serializer):
-        group = get_object_or_404(Group, id=self.request.data.get('group'))
-        serializer.save(created_by=self.request.user,
-                        group=group, **self.request.data)
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def perform_destroy(self, instance):
         instance.is_delete = False
