@@ -57,7 +57,8 @@ PROJECTS_APPS = [
     "apps.accounts.users",
     "apps.accounts.students",
     "apps.groups",
-    "apps.expenses"
+    "apps.expenses",
+    "apps.settlements"
 ]
 
 
