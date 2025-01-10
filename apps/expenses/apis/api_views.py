@@ -1,13 +1,9 @@
-from django.shortcuts import get_object_or_404
-from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status, viewsets
-from rest_framework.decorators import action
 from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.response import Response
 
 from apps.expenses.models import Expense
 from apps.expenses.serializers import ExpenseDetailSerializer, ExpenseSerializer
-from apps.groups.models import Group
 
 
 class ExpenseViewSet(viewsets.ModelViewSet):
