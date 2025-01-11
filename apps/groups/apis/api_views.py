@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
-from rest_framework import status, viewsets
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
@@ -19,6 +20,10 @@ class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
     permission_classes = [IsAuthenticated, IsAdminOrOwner]
+    filter_backends = [DjangoFilterBackend,
+                       filters.SearchFilter]
+    filterset_fields = ['group_type']
+    search_fields = ['name', 'members__first_name']
 
     def get_queryset(self):
         """

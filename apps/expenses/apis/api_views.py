@@ -1,8 +1,10 @@
-from rest_framework import status, viewsets
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters, status, viewsets
 from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 
+from apps.expenses.filters import ExpenseFilter
 from apps.expenses.models import Expense
 from apps.expenses.serializers import ExpenseDetailSerializer, ExpenseSerializer
 from apps.utils.permissions import IsAdminOrOwner
@@ -12,6 +14,12 @@ class ExpenseViewSet(viewsets.ModelViewSet):
     queryset = Expense.objects.all()
     serializer_class = ExpenseSerializer
     parser_classes = (MultiPartParser, FormParser)
+
+    filter_backends = [DjangoFilterBackend,
+                       filters.SearchFilter]
+    filterset_class = ExpenseFilter
+    filterset_fields = ['category', 'category', 'split_type',]
+    search_fields = ['group__name', 'group__members__first_name']
 
     def get_permissions(self):
         if self.action == 'delete':
