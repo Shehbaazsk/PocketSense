@@ -1,4 +1,5 @@
-from rest_framework import status
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters, status
 from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
@@ -34,6 +35,10 @@ class StudentViewSet(ModelViewSet):
     serializer_class = ListGetStudentSerializers
     permission_classes = [IsAuthenticated, IsAdminOrOwner]
     http_method_names = ['get', 'patch', 'delete',]
+
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_fields = ['default_payment_method']
+    search_fields = ['user__first_name',]
 
     def get_queryset(self):
         """
